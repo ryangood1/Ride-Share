@@ -1,6 +1,6 @@
 function confirmHealth() {
   if(document.getElementById("yes").checked == true) {
-    window.location.href = "index.html";
+    window.location.href = "main.html";
   }
   else {
     var div = document.getElementById("health");
