@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Request Form</title>
+		<link rel="stylesheet" type="text/css" href="styles.css"/>
+		<script type="text/javascript" src="funcs.js"></script>
+		<meta name="robots" content="noindex,nofollow">
+
+	</head>
+	<body>
+		<div id = "wrapper">
+			<h1>Ride Share App</h1>
+			<h3>Make Request</h3>
+			<p>
+				<label for = "role">Role:</label>
+				<select name = "role" id = "role">
+					<option value = "driver">Driver</option>
+					<option value = "passenger">Passenger</option>
+					<option value = "both">Both</option>
+				</select>
+			</p><br>
+			<p>
+				Select a start and end time for your timeframe:
+			</p>
+			<p>
+				<label for = "startTime">Start time:</label>
+				<input type = "time" id = "startTime" name = "startTime">
+			</p>
+			<p>
+				<label for = "endTime">End time:</label>
+				<input type = "time" id = "endTime" name = endTime">
+			</p><br>
+			<p>
+				Where are you going?
+			</p>
+			<p>
+				<label for = "from">From:</label>
+				<input type = "from" id = "from" name = "from">
+				<label for = "to">To:</label>
+				<input type = "to" id = "to" name = "to">
+			</p><br>
+			<p>
+				<label for = "party">Select your party number (4 max):</label>
+				<select name = "role" id = "role">
+					<option value = "party1">1</option>
+					<option value = "party2">2</option>
+					<option value = "party3">3</option>
+					<option value = "party4">4</option>
+				</select><br>
+			</p><br>
+			<p>
+				<label for = "contact">Enter your contact number:</label>
+				<input type = "contact" id = "contact" name = "contact">
+			</p><br>
+			<button id = "submit">Submit</button>
+		</div>
+	</body>
+</html>
