@@ -41,61 +41,56 @@
 		<script>
 			function initAutocomplete() {
 				var location = { lat: -37.788101, lng: 175.276993 };
-				const map = new google.maps.Map(document.getElementById("map1"), {
+				const map1 = new google.maps.Map(document.getElementById("map1"), {
 					center: location,
 					zoom: 13.5,
 					mapTypeId: "roadmap",
 				});
-				const input = document.getElementById("from");
-				const searchBox = new google.maps.places.SearchBox(input);
-				//map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-				map.addListener("bounds_changed", () => {
-					searchBox.setBounds(map.getBounds());
+				const input1 = document.getElementById("from");
+				const searchBox1 = new google.maps.places.SearchBox(input1);
+				map1.addListener("bounds_changed", () => {
+					searchBox1.setBounds(map.getBounds());
 				});
-				let markers = [];
-				searchBox.addListener("places_changed", () => {
-					const places = searchBox.getPlaces();
-					if (places.length == 0) {
+				let markers1 = [];
+				searchBox1.addListener("places_changed", () => {
+					const places1 = searchBox1.getPlaces();
+					if (places1.length == 0) {
 						return;
 					}
-					markers.forEach((marker) => {
+					markers1.forEach((marker) => {
 						marker.setMap(null);
 					});
-					markers = [];
-					const bounds = new google.maps.LatLngBounds();
-					places.forEach((place) => {
+					markers1 = [];
+					const bounds1 = new google.maps.LatLngBounds();
+					places1.forEach((place) => {
 						if (!place.geometry) {
 							console.log("Returned place contains no geometry");
 							return;
 						}
-						const icon = {
+						const icon1 = {
 							url: place.icon,
 							size: new google.maps.Size(71, 71),
 							origin: new google.maps.Point(0, 0),
 							anchor: new google.maps.Point(17, 34),
 							scaledSize: new google.maps.Size(25, 25),
 						};
-						markers.push(
+						markers1.push(
 							new google.maps.Marker({
-								map,
-								icon,
+								map1,
+								icon1,
 								title: place.name,
 								position: place.geometry.location,
 							})
 						);
-
 						if (place.geometry.viewport) {
-							bounds.union(place.geometry.viewport);
+							bounds1.union(place.geometry.viewport);
 						}
 						else {
-							bounds.extend(place.geometry.location);
+							bounds1.extend(place.geometry.location);
 						}
 					});
-					map.fitBounds(bounds);
+					map1.fitBounds(bounds);
 				});
-
-
-
 				const map2 = new google.maps.Map(document.getElementById("map2"), {
 					center: location,
 					zoom: 13.5,
