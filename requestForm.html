@@ -2,58 +2,207 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<title>Request Form</title>
+		<title>Request/Offer Form</title>
 		<link rel="stylesheet" type="text/css" href="styles.css"/>
+		<script type="text/javascript" src="funcs.js"></script>
+		<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 		<script type="text/javascript" src="funcs.js"></script>
 		<meta name="robots" content="noindex,nofollow">
 
 	</head>
 	<body>
+		<style>
+			div#map1, div#map2 {
+				width: 500px;
+				height: 400px;
+			}
+			input#to, input#from {
+				width: 450px;
+			}
+			select, input {
+				border: 2px solid #ca6f1e;
+				border-radius: 4px;
+				background-color: #f8c471;
+			}
+			#submit {
+				border: 4px solid #ca6f1e;
+				border-radius: 4px;
+				background-color: #ca6f1e;
+				color: white;
+				width: 100%;
+			}
+			#submit:hover {
+				border: 4px solid #ca6f1e;
+				border-radius: 4px;
+				background-color: #f8c471;
+				width: 100%;
+			}
+		</style>
+		<script>
+			function initAutocomplete() {
+				var location = { lat: -37.788101, lng: 175.276993 };
+				const map = new google.maps.Map(document.getElementById("map1"), {
+					center: location,
+					zoom: 13.5,
+					mapTypeId: "roadmap",
+				});
+				const input = document.getElementById("from");
+				const searchBox = new google.maps.places.SearchBox(input);
+				//map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+				map.addListener("bounds_changed", () => {
+					searchBox.setBounds(map.getBounds());
+				});
+				let markers = [];
+				searchBox.addListener("places_changed", () => {
+					const places = searchBox.getPlaces();
+					if (places.length == 0) {
+						return;
+					}
+					markers.forEach((marker) => {
+						marker.setMap(null);
+					});
+					markers = [];
+					const bounds = new google.maps.LatLngBounds();
+					places.forEach((place) => {
+						if (!place.geometry) {
+							console.log("Returned place contains no geometry");
+							return;
+						}
+						const icon = {
+							url: place.icon,
+							size: new google.maps.Size(71, 71),
+							origin: new google.maps.Point(0, 0),
+							anchor: new google.maps.Point(17, 34),
+							scaledSize: new google.maps.Size(25, 25),
+						};
+						markers.push(
+							new google.maps.Marker({
+								map,
+								icon,
+								title: place.name,
+								position: place.geometry.location,
+							})
+						);
+
+						if (place.geometry.viewport) {
+							bounds.union(place.geometry.viewport);
+						}
+						else {
+							bounds.extend(place.geometry.location);
+						}
+					});
+					map.fitBounds(bounds);
+				});
+
+
+
+				const map2 = new google.maps.Map(document.getElementById("map2"), {
+					center: location,
+					zoom: 13.5,
+					mapTypeId: "roadmap",
+				});
+				const input2 = document.getElementById("to");
+				const searchBox2 = new google.maps.places.SearchBox(input2);
+				//map.controls[google.maps.ControlPosition.TOP_LEFT].push(input2);
+				map2.addListener("bounds_changed", () => {
+					searchBox2.setBounds(map.getBounds());
+				});
+				let markers2 = [];
+				searchBox2.addListener("places_changed", () => {
+					const places2 = searchBox2.getPlaces();
+					if (place2s.length == 0) {
+						return;
+					}
+					markers2.forEach((marker) => {
+						marker.setMap(null);
+					});
+					markers2 = [];
+					const bounds2 = new google.maps.LatLngBounds();
+					places2.forEach((place) => {
+						if (!place.geometry) {
+							console.log("Returned place contains no geometry");
+							return;
+						}
+						const icon2 = {
+							url: place.icon,
+							size: new google.maps.Size(71, 71),
+							origin: new google.maps.Point(0, 0),
+							anchor: new google.maps.Point(17, 34),
+							scaledSize: new google.maps.Size(25, 25),
+						};
+						markers2.push(
+							new google.maps.Marker({
+								map2,
+								icon2,
+								title: place.name,
+								position: place.geometry.location,
+							})
+						);
+						if (place.geometry.viewport) {
+							bounds2.union(place.geometry.viewport);
+						}
+						else {
+							bounds2.extend(place.geometry.location);
+						}
+					});
+					map2.fitBounds(bounds2);
+				});
+			}
+		</script>
+		<script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyBzhowL429CDpRvkkpJoHdHAXm0PcMSSQc&v=weekly&callback=initAutocomplete" defer></script>
 		<div id = "wrapper">
 			<h1>Ride Share App</h1>
 			<h3>Make Request</h3>
-			<p>
-				<label for = "role">Role:</label>
-				<select name = "role" id = "role">
-					<option value = "driver">Driver</option>
-					<option value = "passenger">Passenger</option>
-					<option value = "both">Both</option>
-				</select>
-			</p><br>
-			<p>
-				Select a start and end time for your timeframe:
-			</p>
-			<p>
-				<label for = "startTime">Start time:</label>
-				<input type = "time" id = "startTime" name = "startTime">
-			</p>
-			<p>
-				<label for = "endTime">End time:</label>
-				<input type = "time" id = "endTime" name = endTime">
-			</p><br>
-			<p>
-				Where are you going?
-			</p>
-			<p>
+			<form action = "submitRequest.php" method = "post">
+				<p>
+					Please fill out ALL fields in this form then submit.
+				</p><br><hr>
+				<p>
+					<label for = "role">Role:</label>
+					<select name = "role" id = "role" required>
+						<option value = "driver">Driver</option>
+						<option value = "passenger">Passenger</option>
+						<option value = "both">Both</option>
+					</select>
+				</p><hr>
+				<p>
+					Select a start and end time for your timeframe:
+				</p>
+				<p>
+					[Note: this is the timeframe within which you intend to go to your destination.]
+				</p>
+				<p>
+					<label for = "startTime">Start time:</label>
+					<input type = "datetime-local" id = "startTime" name = "startTime" required>
+				</p>
+				<p>
+					<label for = "endDate">End time:</label>
+					<input type = "datetime-local" id = "endTime" name = "endTime" required>
+				</p><hr>
+				<p>
+					Where are you going?
+				</p>
 				<label for = "from">From:</label>
-				<input type = "from" id = "from" name = "from">
+				<input type = "text" id = "from" class = "controls" name = "from" placeholder = "Search location..."" required>
+				<div id = "map1"></div><br>
 				<label for = "to">To:</label>
-				<input type = "to" id = "to" name = "to">
-			</p><br>
-			<p>
-				<label for = "party">Select your party number (4 max):</label>
-				<select name = "role" id = "role">
-					<option value = "party1">1</option>
-					<option value = "party2">2</option>
-					<option value = "party3">3</option>
-					<option value = "party4">4</option>
-				</select><br>
-			</p><br>
-			<p>
-				<label for = "contact">Enter your contact number:</label>
-				<input type = "contact" id = "contact" name = "contact">
-			</p><br>
-			<button id = "submit">Submit</button>
+				<input type = "text" id = "to" class = "controls" name = "to" placeholder = "Search location..."" required>
+				<div id = "map2"></div><hr>
+				<p>
+					<label for = "party">Select your party number (4 max):</label>
+					<select name = "party" id = "role" required>
+						<option value = "1">1</option>
+						<option value = "2">2</option>
+						<option value = "3">3</option>
+						<option value = "4">4</option>
+					</select>
+				</p><hr>
+				<p>
+					<label for = "contact">Enter your contact number:</label>
+					<input type = "text" id = "contact" name = "contact" required>
+				</p><hr><br>
+				<input type = "submit" value = "Submit" id = "submit">
+			</form>
 		</div>
 	</body>
 </html>
