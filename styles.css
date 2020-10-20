@@ -26,3 +26,9 @@ h1 {
   background-color: pink;
   height: 100px;
 }
+
+.offerDiv {
+  background-color: yellow;
+  margin: 5px;
+  height: auto;
+}
