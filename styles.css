@@ -19,3 +19,15 @@ h1 {
   margin-top: 0;
 	padding-bottom: 0;
 }
+
+#ridesContainer {
+  padding: 5px;
+  background-color: pink;
+  height: auto;
+}
+
+.offerDiv {
+  background-color: yellow;
+  margin: 5px;
+  height: auto;
+}
