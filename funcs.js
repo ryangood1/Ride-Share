@@ -46,17 +46,17 @@ function displayOffers(response) {
   var responseArray = JSON.parse(response);
   var ridesContainerDiv = document.getElementById("ridesContainer");
 
-  //for(var i = 0; i < responseArray.length; i++) {
-    //var specArray = responseArray[i];
+  for(var i = 0; i < responseArray.length; i++) {
+    var specArray = responseArray[i];
 
     //Getting values from JSON array into variables
-    var driver_name = responseArray.driver_name;
-    var passenger_name = responseArray.passenger_name;
-    var ride_type = responseArray.ride_type;
-    var leave_time = responseArray.leave_time;
-    var pickup_time = responseArray.pickup_time;
-    var current_location = responseArray.current_location;
-    var destination = responseArray.destination;
+    var driver_name = specArray.driver_name;
+    var passenger_name = specArray.passenger_name;
+    var ride_type = specArray.ride_type;
+    var leave_time = specArray.leave_time;
+    var pickup_time = specArray.pickup_time;
+    var current_location = specArray.current_location;
+    var destination = specArray.destination;
 
     var offerDiv = document.createElement("div");
     offerDiv.classList = "offerDiv";
@@ -90,4 +90,5 @@ function displayOffers(response) {
     offerDiv.appendChild(output7);
 
     ridesContainerDiv.appendChild(offerDiv);
+  }
 }
