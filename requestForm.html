@@ -46,12 +46,23 @@
 					zoom: 13.5,
 					mapTypeId: "roadmap",
 				});
+				const map2 = new google.maps.Map(document.getElementById("map2"), {
+					center: location,
+					zoom: 13.5,
+					mapTypeId: "roadmap",
+				});
 				const input1 = document.getElementById("from");
+				const input2 = document.getElementById("to");
 				const searchBox1 = new google.maps.places.SearchBox(input1);
+				const searchBox2 = new google.maps.places.SearchBox(input2);
 				map1.addListener("bounds_changed", () => {
-					searchBox1.setBounds(map.getBounds());
+					searchBox1.setBounds(map1.getBounds());
+				});
+				map2.addListener("bounds_changed", () => {
+					searchBox2.setBounds(map2.getBounds());
 				});
 				let markers1 = [];
+				let markers2 = [];
 				searchBox1.addListener("places_changed", () => {
 					const places1 = searchBox1.getPlaces();
 					if (places1.length == 0) {
@@ -89,23 +100,11 @@
 							bounds1.extend(place.geometry.location);
 						}
 					});
-					map1.fitBounds(bounds);
+					map1.fitBounds(bounds1);
 				});
-				const map2 = new google.maps.Map(document.getElementById("map2"), {
-					center: location,
-					zoom: 13.5,
-					mapTypeId: "roadmap",
-				});
-				const input2 = document.getElementById("to");
-				const searchBox2 = new google.maps.places.SearchBox(input2);
-				//map.controls[google.maps.ControlPosition.TOP_LEFT].push(input2);
-				map2.addListener("bounds_changed", () => {
-					searchBox2.setBounds(map.getBounds());
-				});
-				let markers2 = [];
 				searchBox2.addListener("places_changed", () => {
 					const places2 = searchBox2.getPlaces();
-					if (place2s.length == 0) {
+					if (places2.length == 0) {
 						return;
 					}
 					markers2.forEach((marker) => {
@@ -185,7 +184,7 @@
 				<div id = "map2"></div><hr>
 				<p>
 					<label for = "party">Select your party number (4 max):</label>
-					<select name = "party" id = "role" required>
+					<select name = "party" id = "party" required>
 						<option value = "1">1</option>
 						<option value = "2">2</option>
 						<option value = "3">3</option>
