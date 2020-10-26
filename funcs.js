@@ -46,10 +46,16 @@ function displayOffers(response) {
   var responseArray = JSON.parse(response);
   var ridesContainerDiv = document.getElementById("ridesContainer");
 
+  //Sorts array of ride by lowest leave time
+  responseArray.sort(function(a, b) {
+      return a.leave_time.localeCompare(b.leave_time);
+    }
+  );
+
   for(var i = 0; i < responseArray.length; i++) {
     var specArray = responseArray[i];
 
-    //Getting values from JSON array into variables
+    //Gets values from JSON array and puts them into variables
     var driver_name = specArray.driver_name;
     var passenger_name = specArray.passenger_name;
     var ride_type = specArray.ride_type;
@@ -59,9 +65,11 @@ function displayOffers(response) {
     var destination = specArray.destination;
 
     var rideDiv = document.createElement("div");
-    if(driver_name == "") {
+    //If ride_type is passenger, give it the class of requestDiv
+    if(ride_type == "Passenger") {
       rideDiv.classList = "requestDiv";
     }
+    //Else the ride_type is therefore an offer, so give it the class of offerDiv
     else {
       rideDiv.classList = "offerDiv";
     }
