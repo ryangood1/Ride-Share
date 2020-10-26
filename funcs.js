@@ -58,8 +58,14 @@ function displayOffers(response) {
     var current_location = specArray.current_location;
     var destination = specArray.destination;
 
-    var offerDiv = document.createElement("div");
-    offerDiv.classList = "offerDiv";
+    var rideDiv = document.createElement("div");
+    if(driver_name == "") {
+      rideDiv.classList = "requestDiv";
+    }
+    else {
+      rideDiv.classList = "offerDiv";
+    }
+
     var output1 = document.createElement("p");
     var textNode1 = document.createTextNode("Driver: " + driver_name);
     var output2 = document.createElement("p");
@@ -81,14 +87,14 @@ function displayOffers(response) {
     output5.appendChild(textNode5);
     output6.appendChild(textNode6);
     output7.appendChild(textNode7);
-    offerDiv.appendChild(output1);
-    offerDiv.appendChild(output2);
-    offerDiv.appendChild(output3);
-    offerDiv.appendChild(output4);
-    offerDiv.appendChild(output5);
-    offerDiv.appendChild(output6);
-    offerDiv.appendChild(output7);
+    rideDiv.appendChild(output1);
+    rideDiv.appendChild(output2);
+    rideDiv.appendChild(output3);
+    rideDiv.appendChild(output4);
+    rideDiv.appendChild(output5);
+    rideDiv.appendChild(output6);
+    rideDiv.appendChild(output7);
 
-    ridesContainerDiv.appendChild(offerDiv);
+    ridesContainerDiv.appendChild(rideDiv);
   }
 }
