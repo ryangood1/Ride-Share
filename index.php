@@ -21,6 +21,20 @@
     
     </head>
     <body>
+	<!-- <script>$(function() {
+        $('nav-link').click(function(event) {
+        localStorage.setItem("text", "nav-link");
+        });
+
+        var path = window.location.pathname;
+        var pathSub = path.substring(path.lastIndexOf("/") + 1, path.length)
+
+        if(pathSub == "about.php"){
+            document.getElementById(localStorage.getItem('text')).click();
+        }
+    }) </script> -->
+
+
     <!-- Navitigation -->
     <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
 	    <div class="container-fluid">
@@ -31,7 +45,7 @@
                         <a class="nav-link" href=".">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">About</a>
+                        <a class="nav-link" href="about.php">About</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="https://www.facebook.com/dialog/oauth?client_id=2766679033615065&redirect_uri=http://localhost/callback.php&scope=public_profile">Login with Facebook</a>
