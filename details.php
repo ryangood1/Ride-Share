@@ -7,14 +7,23 @@
     <style>
 
         #map{
-            height: 400px;
-            width: 400px;
+            height: 450px;
+            width: 650px;
+            border-radius: 6%;
         }
+        #detailProfile{
+            text-align: center;
+            max-width: 200px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+        }
+
     </style>
 </head>
 
 <body>
     <h1>Detail</h1>
+    <div class="detailProfile">
     <table>
         <tr>
             <th>Name:</th>
@@ -40,16 +49,26 @@
 
     
     //  $sql="SELECT name,role,party_number, locationLatitude, locationLongitude from users";
-     $query="SELECT * from `users`";
-    //  $result=$conn->query($sql);
+
+    
+    $name= "John Smith";
+    // $query="SELECT * FROM `users` WHERE name= '$name';
+    $query="SELECT * FROM `rides` WHERE driver_name= '$name'";
+
+//  $result=$conn->query($sql);
+
     $result= mysqli_query($conn,$query);
     while ($row=mysqli_fetch_array($result)){
-        echo "<tr><td>".$row["name"]."</td><td>".$row["role"]."</td><td>".$row["party_number"]."</td><td>".$row["time_to_leave"]."</td><td>".$row["home_address"]."</td><td>".$row["email"]."</td><td>".$row["contact_number"]."</td><td>".$row["comments"]."</td></tr>";
+        echo "<tr><td>".$row["driver_name"]."</td><td>".$row["ride_type"]."</td><td>".$row["party_number"]
+        ."</td><td>".$row["leave_time"]."</td><td>".$row["current_location"]."</td>
+        <td>".$row["contact_number"]."</td></tr>";
 
 
         //try:
-        $lat=$row["locationLatitude"];
-        $lng=$row["locationLongitude"];
+        $latStart=$row["locationLatitudeStart"];
+        $lngStart=$row["locationLongitudeStart"];
+        $latEnd=$row["locationLatitudeEnd"];
+        $lngEnd=$row["locationLongitudeEnd"];
 
 
 
@@ -90,20 +109,55 @@
         
 
     </table>
+    </div>
 
     <div id="map">      
     </div>
 <script>
     function initMap(){
-        var location = {lat: <?php echo $lat; ?>, lng: <?php echo $lng; ?>};
-        var map = new google.maps.Map(document.getElementById("map"), {
-            zoom: 13.5, 
-            center: location
+        var locationStart = {lat: <?php echo $latStart; ?>, lng: <?php echo $lngStart; ?>};
+
+        var locationEnd = {lat: <?php echo $latEnd; ?>, lng: <?php echo $lngEnd; ?>};
+
+
+        var map = new google.maps.Map(document.getElementById("map"), {   
+            zoom: 13.1, 
+            center: locationStart
         });
-        var marker= new google.maps.Marker({
-            position: location,
+
+
+
+
+        
+
+
+
+
+
+
+        var marker1= new google.maps.Marker({
+            position: locationStart,
+            icon: {
+                url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
+            },
+            map:map,
+            title: "Start",
+            label: { color: '#C70E2', fontWeight: 'bold', fontSize: '10px', text: 'Start' },
+            animation: google.maps.Animation.BOUNCE,
+        });
+
+        var marker2= new google.maps.Marker({
+            position: locationEnd,
+            icon: {
+                url: "http://maps.google.com/mapfiles/ms/icons/yellow-dot.png"
+            },
+            title: "End",
+            label: { color: '#C70E2', fontWeight: 'bold', fontSize: '10px', text: 'End' },
+            animation: google.maps.Animation.BOUNCE,
             map:map
         });
+
+
     }
 </script>
 
