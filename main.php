@@ -13,7 +13,6 @@
 			<p>Welcome to our Ride-Sharing Web App. Below you will find active Rides that you can join, or if you have a car you can create a ride offer, and drive someone else to University!</p>
 			<input type="button" value="Create offer/request" onclick="">
 			<input type="button" value="My Offers" onclick="">
-			<input type="button" value="Load Offers" onclick="getOffers()">
 			<div id = "ridesContainer">
 				<p>Click 'Load Offers' to view the current active ride offers</p>
 			</div>
