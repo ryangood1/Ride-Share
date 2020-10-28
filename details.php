@@ -1,41 +1,33 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>
-        Users details
-    </title>
-    <style>
 
+<head>
+    <title>Users details</title>
+    <style>
+        .detailProfile{
+            margin-left: auto;
+            margin-right: auto;
+            text-align:center;
+            max-width: 720px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border-radius: 6%;
+        }
         #map{
             height: 450px;
             width: 650px;
             border-radius: 6%;
+            object-fit: cover;
+            margin: 0 auto 20px auto;
+            display: block;
         }
-        #detailProfile{
-            text-align: center;
-            max-width: 200px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            padding: 20px;
-        }
-
     </style>
 </head>
 
 <body>
-    <h1>Detail</h1>
-    <div class="detailProfile">
-    <table>
-        <tr>
-            <th>Name:</th>
-            <th>Role:</th>
-            <th>Party Number:</th>
-            <th>Time to Leave:</th>
-            <th>Home address</th>          
-            <th>E-mail:</th>
-            <th>Contact Number:</th>
-            <th>Comments:</th>
-        </tr>
+    <h1>Detail Page</h1>
 
+    <div class="detailProfile">
     <?php
     $conn=mysqli_connect('mysql.rideshare.hamwebs.com', 'waikato','@bGYpRSE5@', 'rideshare_hamwebs');
 
@@ -59,9 +51,8 @@
 
     $result= mysqli_query($conn,$query);
     while ($row=mysqli_fetch_array($result)){
-        echo "<tr><td>".$row["driver_name"]."</td><td>".$row["ride_type"]."</td><td>".$row["party_number"]
-        ."</td><td>".$row["leave_time"]."</td><td>".$row["current_location"]."</td>
-        <td>".$row["contact_number"]."</td></tr>";
+        echo "".$row["driver_name"]."<br><br>Role:".$row["ride_type"]."<br>Party Number:".$row["party_number"]."<br>"
+        ."Time to Leave:".$row["leave_time"]."<br>Starting Place".$row["current_location"]."<br>Contact Number:".$row["contact_number"]."";
 
 
         //try:
@@ -106,13 +97,17 @@
     // $conn->close();
     // }
     ?>
-        
+    
+    <br><br>
 
-    </table>
-    </div>
 
-    <div id="map">      
-    </div>
+    <div id="map"></div>
+    <!-- End of the user detail container -->
+    </div>      
+
+
+
+
 <script>
     function initMap(){
         var locationStart = {lat: <?php echo $latStart; ?>, lng: <?php echo $lngStart; ?>};
