@@ -1,3 +1,8 @@
+//Gets offers when page loads
+document.addEventListener("DOMContentLoaded", getOffers());
+//Re-runs getOffers every 30 seconds
+setInterval(function(){getOffers()}, 30000)
+
 function confirmHealth() {
   if(document.getElementById("yes").checked) {
     window.location.href = "main.html";
@@ -12,8 +17,10 @@ function confirmHealth() {
 }
 
 function getOffers() {
-  var healthDiv = document.getElementById("ridesContainer");
-  healthDiv.innerHTML = "";
+  var ridesDiv = document.getElementById("ridesContainer");
+  if (ridesDiv.innerHTML != "") {
+    ridesDiv.innerHTML = "";
+  }
   var url = "getOffers.php";
   var data = "";
   ajaxRequest("GET", url, data, displayOffers);
